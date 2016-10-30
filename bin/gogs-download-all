@@ -1,0 +1,37 @@
+#!/bin/env python3
+# TODO FIXME Implement this a proper way
+# Written by Odin Ugedal <odin@ugedal.com>
+
+
+from urllib.request import urlopen
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+import getpass
+import subprocess
+
+# Get user input
+base_url = input("Gogs base url: ")
+user = input("Username: ")
+password = getpass.getpass()
+
+url = base_url + "/api/v1/user/repos"
+response = requests.get(url, auth=HTTPBasicAuth(user, password))
+data = response.json()
+for repo in data:
+    reponame = "".join(repo["full_name"].split("/")[1:])
+    subprocess.Popen(
+        "git-clone-or-sync {} {}".format(
+            repo["ssh_url"],
+            reponame
+        ),
+        shell=True
+    ).communicate()
+    subprocess.Popen(
+        "git remote add https {}".format(
+            repo["clone_url"]
+        ),
+        cwd=reponame,
+        shell=True
+
+    ).communicate()

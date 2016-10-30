@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Print the remaining battery time
+
+TIME=$(cat /sys/class/power_supply/sbs-5-000b/uevent | grep TIME_TO_EMPTY | awk 'BEGIN{FS="="} {print $2}' | awk '{print strftime("%-H hours and %-M minutes",$1)}')
+notify-send -t 4000 "<b>Battery </b> \n$TIME remaining"

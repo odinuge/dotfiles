@@ -1,0 +1,38 @@
+! special
+*.foreground:   #eceff1
+*.background:   #1c262b
+
+! black
+*.color0:       #1c262b
+*.color8:       #37474f
+
+! red
+*.color1:       #ff5c57
+*.color9:       #ff5c57
+
+! green
+*.color2:       #5af78e
+*.color10:      #5af78e
+
+! yellow
+*.color3:       #ffc107
+*.color11:      #ffc107
+
+! blue
+*.color4:       #57c7ff
+*.color12:      #57c7ff
+
+! magenta
+*.color5:       #ff6ac1
+*.color13:      #ff6ac1
+
+! cyan
+*.color6:       #9aedfe
+*.color14:      #9aedfe
+
+! white
+*.color7:       #f1f1f0
+*.color15:      #eff0eb
+
+xterm*faceName: Menlo:size=12:antialias=true
+xterm*font: 7x13

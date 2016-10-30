@@ -1,0 +1,33 @@
+#!/bin/sh
+FILENAME="ARCH_LINUX_PACKAGES"
+cat > $FILENAME << EOF
+# Hi!
+# Unncomment or delete the lines you don't want to install.
+# The rest will be installed with the command:
+# pacman -Syu --needed  \$PACKAGES
+#
+# Feel free to add more!
+#
+
+EOF
+PACKAGES="openssh vim neovim tmux xterm git go chromium
+zsh gnupg go grml-zsh-config"
+
+for package in $PACKAGES; do
+    pacman -Q "$package" >/dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+        true
+        # It is installed
+    else
+        echo "$package" >> $FILENAME
+    fi
+
+done
+
+
+vim $FILENAME 2>/dev/null || nano $FILENAME
+
+echo "$(sed '/^#/ d' < $FILENAME | tr '\n' ' ')" | sudo pacman --needed -Syu -
+
+rm $FILENAME

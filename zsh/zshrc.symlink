@@ -1,0 +1,92 @@
+# utf-8
+export LC_ALL="en_US.UTF-8"
+
+# export Dirs
+export DOTFILES=$(dirname $(dirname $(readlink -nf ~/.zshrc)))
+export ZSH=$DOTFILES
+
+# antigen - Plugins
+source $HOME/.antigen.zsh
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle robertzk/send.zsh
+antigen bundle mollifier/cd-gitroot
+antigen bundle caarlos0/git-add-remote
+
+# Fix TERM
+export TERM=tmux-256color
+
+export PATH=$PATH:$DOTFILES/bin
+
+# your project folder that we can `c [tab]` to
+export PROJECTS=~/src
+
+# source every .zsh file in this rep
+for config_file ($ZSH/**/*.zsh) source $config_file
+
+# use .localrc for super secret things
+if [[ -a ~/.localrc ]]; then source ~/.localrc; fi
+
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit
+compinit
+for config_file ($ZSH/**/completion.sh) source $config_file
+
+fpath=( "$HOME/.config/zfunctions" $fpath )
+
+# Prompt theme
+autoload -U promptinit && promptinit
+prompt pure
+
+source /usr/share/doc/pkgfile/command-not-found.zsh 2>/dev/null
+
+# quote pasted URLs
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
+# Vi-mode on <ESC>, with awesome text support
+# See vim-mode.zsh
+
+# Tmux ssh stuff
+[[ "$SSH_CONNECTION" != '' ]] && tmux source-file ~/.tmux.conf.ssh >/dev/null 2>/dev/null
+
+# fix golang path
+export GOPATH=$HOME/src/golang
+export PATH=$PATH:$GOPATH/bin
+
+# Start the gpg-agent if not already running
+if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
+  gpg-connect-agent /bye >/dev/null 2>&1
+fi
+
+# Set SSH to use gpg-agent
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="/run/user/${GID}/gnupg/S.gpg-agent.ssh"
+fi
+
+# FZF is Awesome!
+# CTRL + R for command log 
+# PS: fzf installed with vim,
+# else, Goooooogle FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Ruby gems
+if (( $+commands[ruby] )) ; then
+    PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+fi
+
+autoload -U history-search-end
+
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
+bindkey "\e[A" history-beginning-search-backward-end
+bindkey "\e[B" history-beginning-search-forward-end
+
+export NODE_ENV=development
+
+unsetopt extendedglob
+
+# Private stuff
+[ -f ~/.zshrc.priv ] && source ~/.zshrc.priv

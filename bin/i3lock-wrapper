@@ -1,0 +1,11 @@
+#!/bin/sh
+file1=$(mktemp --tmpdir i3lock-wrapper-XXXXXXXXXX.png)
+file2=$(mktemp --tmpdir i3lock-wrapper-XXXXXXXXXX.png)
+
+scrot -z -d0 "$file1"
+convert "$file1" -blur 0x3 "$file2"
+rm "$file1" # Remove for security
+
+# drop the last "--" introduced by getopt
+i3lock -i "$file2" $@
+

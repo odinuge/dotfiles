@@ -1,0 +1,8 @@
+# Tmux config for ssh sessions
+
+set-option -g window-status-current-fg colour2
+set-option -g message-fg colour2
+
+# Use C-b
+set prefix C-b
+unbind-key C-a
