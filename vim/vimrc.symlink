@@ -23,7 +23,7 @@ Plug 'mbbill/undotree'
 
 " Language spesific stuff
 Plug 'fatih/vim-go'
-Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-markdown'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'jstemmer/gotags'
@@ -84,6 +84,15 @@ Plug 'carlitux/deoplete-ternjs'
 " ALE - Linting
 Plug 'w0rp/ale'
 
+" Testing
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'wakatime/vim-wakatime'
+Plug 'Chiel92/vim-autoformat'
+Plug 'jebaum/vim-tmuxify'
+
+Plug 'PotatoesMaster/i3-vim-syntax'
+
 call plug#end()
 
 "
@@ -101,6 +110,9 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+if has('nvim')
+    set inccommand=nosplit
+endif
 
 set magic
 
@@ -142,6 +154,14 @@ hi Normal ctermbg=NONE ctermfg=254
 hi Search ctermbg=LightBlue
 hi CursorLineNr ctermfg=4
 hi EndOfBuffer ctermfg=12
+hi SpecialKey ctermfg=red cterm=bold
+
+" HIghlight Bad spaces
+set listchars=nbsp:¬,tab:\ \ 
+",trail:-
+
+set list
+
 
 function Toggle_background()
     if &background ==# 'dark'
@@ -211,7 +231,7 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 "
 " Plugin settings
-" 
+"
 
 " Gitgutter
 let g:gitgutter_sign_column_always = 1
@@ -301,15 +321,15 @@ hi ALEwarningSign ctermfg=3 ctermbg=0
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 " Startify theme
-highlight StartifyBracket ctermfg=4
-highlight StartifyFooter  ctermfg=8
-highlight StartifyHeader  ctermfg=8
-highlight StartifyNumber  ctermfg=5
-highlight StartifySection ctermfg=148
-highlight StartifyPath    ctermfg=7
-highlight StartifyFile    ctermfg=37 cterm=bold
-highlight StartifySlash   ctermfg=208
-highlight StartifySpecial ctermfg=12
+"highlight StartifyBracket ctermfg=4
+"highlight StartifyFooter  ctermfg=8
+"highlight StartifyHeader  ctermfg=8
+"highlight StartifyNumber  ctermfg=5
+"highlight StartifySection ctermfg=148
+"highlight StartifyPath    ctermfg=7
+"highlight StartifyFile    ctermfg=37 cterm=bold
+"highlight StartifySlash   ctermfg=208
+"highlight StartifySpecial ctermfg=12
 
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 
@@ -330,11 +350,11 @@ let g:startify_custom_header = [
             \ ]                          
 
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode'],['filename', 'modified'], ['ALE', 'paste' ]]
-      \ },
-      \ 'component': {
-      \   'ALE': '%{ALEGetStatusLine()}',
-      \ }
-      \ }
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \   'left': [ [ 'mode'],['filename', 'modified'], ['ALE', 'paste' ]]
+            \ },
+            \ 'component': {
+            \   'ALE': '%{ALEGetStatusLine()}',
+            \ }
+            \ }
