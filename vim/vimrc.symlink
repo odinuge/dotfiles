@@ -62,6 +62,12 @@ Plug 'mhinz/vim-startify'
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-one'
+Plug 'morhetz/gruvbox'
+Plug 'romainl/Apprentice'
+Plug 'jdkanani/vim-material-theme'
+Plug 'kabbamine/yowish.vim'
+
 
 " Other tools
 Plug 'ervandew/supertab'
@@ -77,23 +83,44 @@ Plug 'godlygeek/tabular'
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/neoinclude.vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'zchee/deoplete-clang'
 Plug 'carlitux/deoplete-ternjs'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'kiddos/deoplete-cpp'
+Plug 'zchee/deoplete-jedi'
 
 " ALE - Linting
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
+Plug 'neomake/neomake'
+Plug 'benjie/neomake-local-eslint.vim'
 
 " Testing
+"Plug 'dansomething/vim-eclim'
+
+Plug 'freitass/todo.txt-vim'
+"Plug 'flowtype/vim-flow'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'wakatime/vim-wakatime'
 Plug 'Chiel92/vim-autoformat'
 Plug 'jebaum/vim-tmuxify'
+Plug 'sbdchd/neoformat'
+Plug 'airblade/vim-rooter'
+Plug 'critiqjo/lldb.nvim'
+"Plug 'othree/javascript-libraries-syntax.vim'
+"Plug 'mxw/vim-jsx'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
 
+
+Plug 'joshdick/onedark.vim'
+Plug 'mhartington/oceanic-next'
+
 call plug#end()
+autocmd! BufWritePost * Neomake
 
 "
 " UI 
@@ -119,7 +146,8 @@ set magic
 set showmatch
 
 " Enable line numbers
-set relativenumber number
+"set relativenumber 
+set number
 
 " Make indenting awesome
 set smartindent
@@ -148,13 +176,15 @@ set foldlevelstart=99
 "
 " UI
 "
+let g:PaperColor_Dark_Override = { 'background' : '#ff5faf' }
 set background=dark
+
 silent! colorscheme PaperColor
 hi Normal ctermbg=NONE ctermfg=254
-hi Search ctermbg=LightBlue
-hi CursorLineNr ctermfg=4
-hi EndOfBuffer ctermfg=12
-hi SpecialKey ctermfg=red cterm=bold
+"hi Search ctermbg=LightBlue guibg=blue
+" "hi CursorLineNr ctermfg=4
+"hi EndOfBuffer ctermfg=12 guifg=blue
+hi SpecialKey ctermfg=red cterm=bold guifg=red
 
 " HIghlight Bad spaces
 set listchars=nbsp:¬,tab:\ \ 
@@ -245,7 +275,7 @@ let g:markdown_composer_autostart=0
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#clang#libclang_path='/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header='/usr/include/clang/'
+let g:deoplete#sources#clang#clang_header='/usr/lib/clang/'
 
 let g:markdown_enable_spell_checking = 0
 
@@ -285,6 +315,14 @@ let g:tagbar_type_go = {
             \ }
 
 au FileType javascript.jsx setlocal sw=2 sts=2 et
+au FileType css setlocal sw=2 sts=2 et
+
+au FileType markdown set nonu
+au Filetype markdown set wrap linebreak nolist textwidth=0 wrapmargin=0
+
+au FileType markdown noremap <silent> j gj
+au FileType markdown noremap <silent> k gk
+
 
 fun! s:scroll()
     let l:save = &scrolloff
@@ -316,6 +354,9 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 hi ALEErrorSign ctermfg=1 ctermbg=0
 hi ALEwarningSign ctermfg=3 ctermbg=0
+hi NeomakeErrorSign ctermfg=1
+hi NeomakeWarningSign ctermfg=3
+hi NeomakeError ctermfg=1 cterm=underline 
 
 " Cursor shape in Nvim
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
@@ -331,7 +372,13 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 "highlight StartifySlash   ctermfg=208
 "highlight StartifySpecial ctermfg=12
 
-let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
+let g:startify_bookmarks = [
+    \ {'n': '~/src/ntnu-hugo/'},
+    \ {'v': '~/.vimrc'},
+    \ {'z': '~/.zshrc'},
+    \ {'x': '~/.Xresources'},
+    \ {'t': '~/.tmux.conf'}
+\]
 
 let g:startify_custom_header = [
             \ '                                                                        ',
@@ -349,12 +396,85 @@ let g:startify_custom_header = [
             \ '                           \/__/    \/_/\/_/\/_/\/_/                    ',
             \ ]                          
 
-let g:lightline = {
-            \ 'colorscheme': 'wombat',
-            \ 'active': {
-            \   'left': [ [ 'mode'],['filename', 'modified'], ['ALE', 'paste' ]]
-            \ },
-            \ 'component': {
-            \   'ALE': '%{ALEGetStatusLine()}',
+"let g:lightline = {
+"            \ 'colorscheme': 'wombat',
+"            \ 'active': {
+"            \   'left': [ [ 'mode'],['filename', 'modified'], ['ALE', 'paste' ]]
+"            \ },
+"            \ 'component': {
+"            \   'ALE': '%{ALEGetStatusLine()}',
+"            \ }
+"            \ }
+
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['Makefile', '.git/']
+
+let g:neomake_java_javac_classpath=$CLASSPATH
+let g:neomake_cpp_enabled_makers = ['clang']
+let g:neomake_cpp_clang_maker = {
+   \ 'exe': 'clang++',
+   \ 'args': ['-std=gnu++14'],
+   \ }
+
+
+let g:neoformat_javascript_eslint = {
+            \ 'exe': 'node_modules/eslint/bin/eslint.js',
+            \ 'args': ['--fix', "-c", "$PWD/.eslintrc", "%"],
             \ }
+
+let g:neoformat_enabled_javascript = ['eslint']
+let g:neomake_arduino_avrgcc_maker = {
+            \ 'exe': '/usr/share/arduino/hardware/tools/avr/bin/avr-g++',
+            \ 'args': [
+            \ '-mmcu=atmega328p',
+            \ '-DF_CPU=16000000L',
+            \ '-DARDUINO=165',
+            \ '-DARDUINO_ARCH_AVR',
+            \ '-ffunction-sections',
+            \ '-fdata-sections',
+            \ '-g',
+            \ '-Os',
+            \ '-I/usr/share/arduino/hardware/arduino/cores/arduino',
+            \ '-I/usr/share/arduino/hardware/tools/avr/avr/include',
+            \ '-I/usr/share/arduino/hardware/arduino/avr/variants/standard',
+            \ '-I/home/odin/arduino/libaries/*',
+            \ '-include/usr/share/arduino/hardware/arduino/avr/cores/arduino/Arduino.h',
+            \ '-fsyntax-only',
+            \ '-Wextra',
+            \ '-Wall',
+            \ '-xc++',
+            \ ],
+            \ 'errorformat':
+            \ '%-G%f:%s:,' .
+            \ '%f:%l:%c: %trror: %m,' .
+            \ '%f:%l:%c: %tarning: %m,' .
+            \ '%f:%l:%c: %m,'.
+            \ '%f:%l: %trror: %m,'.
+            \ '%f:%l: %tarning: %m,'.
+            \ '%f:%l: %m',
             \ }
+
+let g:neomake_arduino_enabled_makers = ['avrgcc']
+let g:gitgutter_sign_added = '|'
+let g:gitgutter_sign_modified = '|'
+let g:gitgutter_sign_removed = '|'
+let g:gitgutter_sign_removed_first_line = '__'
+let g:gitgutter_sign_modified_removed = '__'
+
+hi GitGutterAdd guifg=#0fd700
+hi GitGutterChange guifg=yellow
+hi GitGutterDelete guifg=red
+
+" Python {{{
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--ignore=D100,D101,D102,D201,D202,D200']
+    \ }
+let g:neomake_python_enabled_makers = ['flake8']
+
+function! Multiple_cursors_before()
+    let b:deoplete_disable_auto_complete = 1
+endfunction
+
+function! Multiple_cursors_after()
+    let b:deoplete_disable_auto_complete = 0
+endfunction

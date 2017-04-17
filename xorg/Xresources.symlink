@@ -44,3 +44,4 @@ xterm*ptyInitialErase: true
 
 
  URxvt.font: 9x15
+ XTerm*visualBell: false
