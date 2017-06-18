@@ -12,6 +12,9 @@ unbind C-b
 # re-number windows when one is closed
 set -g renumber-windows on
 
+bind-key -n M-C-H previous-window
+bind-key -n M-C-L next-window
+
 set -g mouse on
 
 
@@ -51,10 +54,10 @@ set-window-option -g window-status-bell-style fg=colour235,bg=colour160 #base02,
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-pain-control'
-set -g @plugin 'tmux-plugins/tmux-battery'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+#set -g @plugin 'tmux-plugins/tmux-battery'
+#set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'tmux-plugins/tmux-sidebar'
+#set -g @plugin 'tmux-plugins/tmux-sidebar'
 
 run '~/.tmux/plugins/tpm/tpm'
 set -g -a terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'

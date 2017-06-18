@@ -34,7 +34,7 @@
 *.color7:       #f1f1f0
 *.color15:      #eff0eb
 
-xterm*faceName: Menlo:size=12:antialias=true
+xterm*faceName: Menlo:size=14:antialias=true
 xterm*font: 7x13
 xterm*ptyInitialErase: true
  xterm*ttyModes: erase ^?
