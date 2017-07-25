@@ -57,7 +57,7 @@ ZSH_THEME="pure"
 plugins=(zsh-syntax-highlighting git django archlinux tmuxinator golang go )
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/src/dotfiles-github/zsh/aliases.zsh
+[ -f $HOME/src/dotfiles-github/zsh/aliases.zsh ] && source $HOME/src/dotfiles-github/zsh/aliases.zsh
 
 
 # User configuration
@@ -89,7 +89,6 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
-source /home/odin/src/dotfiles-github/zsh/vim-mode.zsh
 
 zle-keymap-select () {
 if [ $KEYMAP = vicmd ]; then
@@ -106,8 +105,9 @@ zle -N zle-keymap-select
 zle -N zle-line-init zle-keymap-select
 echo -ne "\e[6 q"
 
-source ~/.zshrc.priv
-#
+#source ~/.zshrc.priv
+[ -f ~/.zshrc.priv ] && source ~/.zshrc.priv
+
 # Start the gpg-agent if not already running
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
   gpg-connect-agent /bye >/dev/null 2>&1
@@ -120,7 +120,7 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export EDITOR=nvim
+export EDITOR=vim
 export CLASSPATH=".:./"
 if [ -d ~/src/javalibs/ ]; then
     for file in ~/src/javalibs/*; do
@@ -152,6 +152,7 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 export PATH=$PATH:$DOTFILES/bin
+export PATH=$HOME/local/bin:$PATH
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/src
@@ -178,25 +179,16 @@ zle -N self-insert url-quote-magic
 [[ "$SSH_CONNECTION" != '' ]] && tmux source-file ~/.tmux.conf.ssh >/dev/null 2>/dev/null
 
 # fix golang path
-export GOPATH=$HOME/src/golang
+export GOPATH=$HOME/golang
 export PATH=$PATH:$GOPATH/bin
 
-# Start the gpg-agent if not already running
-if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-  gpg-connect-agent /bye >/dev/null 2>&1
-fi
-
-# Set SSH to use gpg-agent
-unset SSH_AGENT_PID
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  export SSH_AUTH_SOCK="/run/user/${GID}/gnupg/S.gpg-agent.ssh"
-fi
 
 # FZF is Awesome!
 # CTRL + R for command log 
 # PS: fzf installed with vim,
 # else, Goooooogle FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $DOTFILES/zsh/vim-mode.zsh ] && source $DOTFILES/zsh/vim-mode.zsh
 
 # Ruby gems
 if (( $+commands[ruby] )) ; then
@@ -249,3 +241,4 @@ if [ -d ~/src/javalibs/ ]; then
         export CLASSPATH=$CLASSPATH:$file
     done
 fi
+export PATH=$PATH:/usr/local/go/bin
