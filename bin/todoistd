@@ -1,0 +1,4 @@
+#!/bin/bash
+# This is just a simple wrapper script around
+# https://github.com/sachaos/todoist.
+while true; do todoist sync; clear ;todoist l|sort -k3;sleep 20;done
