@@ -1,0 +1,35 @@
+"*":
+  core:
+    audioBeep: false
+    autoHideMenuBar: true
+    telemetryConsent: "no"
+  editor:
+    fontFamily: "Roboto Mono"
+    fontSize: 22
+  "exception-reporting":
+    userId: "0b60ef7a-f105-414c-b51f-03fe504d277f"
+  "linter-ui-default":
+    panelHeight: 69
+  minimap:
+    absoluteMode: true
+    plugins:
+      "git-diff": false
+      "git-diffDecorationsZIndex": 0
+    smoothScrolling: false
+  "prettier-atom":
+    formatOnSaveOptions:
+      enabled: true
+    prettierOptions:
+      singleQuote: true
+  "split-diff":
+    diffWords: true
+    ignoreWhitespace: true
+    leftEditorColor: "red"
+    rightEditorColor: "green"
+    scrollSyncType: "Vertical + Horizontal"
+  "vim-mode-plus-ex-mode":
+    notifiedUseExMode: true
+  wakatime:
+    apikey: "Saved in your ~/.wakatime.cfg file"
+  welcome:
+    showOnStartup: false

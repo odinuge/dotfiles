@@ -1,0 +1,30 @@
+'atom-workspace atom-text-editor':
+  'ctrl-l': 'unset!'
+  'ctrl-j': 'unset!'
+
+'atom-workspace':
+  'ctrl-h': 'window:focus-pane-on-left'
+  'ctrl-l': 'window:focus-pane-on-right'
+  'ctrl-k': 'window:focus-pane-above'
+  'ctrl-j': 'window:focus-pane-below'
+  'ctrl-s p': 'window:focus-previous-tab'
+
+  'ctrl-i':     'cursor-history:next'
+  'ctrl-o':     'cursor-history:prev'
+  'ctrl-shift-i': 'cursor-history:next-within-editor'
+  'ctrl-shift-o': 'cursor-history:prev-within-editor'
+
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  '-': 'choose-pane:start'
+  'alt': 'abort!'
+  'm m': 'choose-pane:focus-last-focused'
+  'ctrl-shift-a': 'significant-other:toggle'
+
+'.markdown-preview':
+  '-': 'choose-pane:start'
+  'm m': 'choose-pane:focus-last-focused'
+
+# For tree-view
+'.tree-view':
+  '-': 'choose-pane:start'
+  'm m': 'choose-pane:focus-last-focused'

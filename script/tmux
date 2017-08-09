@@ -1,8 +1,0 @@
-#!/bin/sh
-
-./script/setup "tmux"
-./script/info.sh "Download tpm - Tmux Plugin Manager"
-bin/git-clone-or-sync https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-~/.tmux/plugins/tpm/scripts/install_plugins.sh
-~/.tmux/plugins/tpm/bin/update_plugins all

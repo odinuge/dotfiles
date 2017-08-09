@@ -1,58 +1,44 @@
 # dotfiles
-> Dotfiles for vim, zsh, tmux and other misc. stuff
+> Dotfiles for vim, zsh, tmux, atom and some other stuff
 
 ![image of uxterm](dotfiles.png)
 
 ## About
-This is my dotfiles. I use uxterm, with tmux, zsh & vim.
+This is my dotfiles. Handled using [gnu stow](https://www.gnu.org/software/stow/).
+
 
 __Includes__:
 - vim
 - tmux
 - zsh
 - misc (xorg ++)
-- List of must-have archlinux packages
-
-
- To inspect install scripts, look inside the `scripts/` folder.
+- atom
 
 ## Install
-```
+```bash
 $ make <whatyouwant>
 ```
 
 _Example_: Install vim, zsh & tmux config
-```
+```bash
 $ make vim zsh tmux
 ```
 
 ## Help
 
-```
+```bash
 $ make help
 
 Odin Ugedal - Dotfiles
 Commands:
  - vim
-	Setup vim and download all deps
- - zsh
-	Setup zsh and download all deps
+ - atom
  - tmux
-	Setup tmux and download all deps
- - misc
-	Setup xorg and other misc stuff
- - archlinux
-	Install awesome archlinux packages
+ - zsh
+ - xorg
+ - atom
+ - atom-packages-restore
+ - atom-packages-backup
 ```
 
-### Archlinux
-> Will give you a list of must-have packages, and allows you to
-> modify it before installing. You can also append packages you
-> want.
-
-```
-$ make archlinux
-```
-
-## License
 MIT © [Odin Ugedal](mailto:odin@ugedal.com)

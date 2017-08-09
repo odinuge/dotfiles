@@ -7,7 +7,7 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="pure"
+ZSH_THEME="refined"
 #ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -132,7 +132,6 @@ export LC_ALL="en_US.UTF-8"
 
 # export Dirs
 export DOTFILES=$(dirname $(dirname $(readlink -nf ~/.zshrc)))
-export ZSH=$DOTFILES
 
 # antigen - Plugins
 #source $HOME/.antigen.zsh
@@ -152,7 +151,7 @@ if [ "$TERM" = "screen-256color" ]; then
 fi
 
 export PATH=$PATH:$DOTFILES/bin
-export PATH=$HOME/local/bin:$PATH
+#export PATH=$HOME/local/bin:$PATH
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/src
@@ -161,7 +160,7 @@ export PROJECTS=~/src
 # use .localrc for super secret things
 if [[ -a ~/.localrc ]]; then source ~/.localrc; fi
 
-for config_file ($ZSH/**/completion.sh) source $config_file
+#for config_file ($ZSH/**/completion.sh) source $config_file
 
 fpath=( "$HOME/.config/zfunctions" $fpath )
 
@@ -176,7 +175,7 @@ zle -N self-insert url-quote-magic
 # See vim-mode.zsh
 
 # Tmux ssh stuff
-[[ "$SSH_CONNECTION" != '' ]] && tmux source-file ~/.tmux.conf.ssh >/dev/null 2>/dev/null
+[[ "$SSH_CONNECTION" != '' ]] && tmux source-file ~/.tmux_ssh.conf >/dev/null 2>/dev/null
 
 # fix golang path
 export GOPATH=$HOME/golang
@@ -184,11 +183,11 @@ export PATH=$PATH:$GOPATH/bin
 
 
 # FZF is Awesome!
-# CTRL + R for command log 
+# CTRL + R for command log
 # PS: fzf installed with vim,
 # else, Goooooogle FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f $DOTFILES/zsh/vim-mode.zsh ] && source $DOTFILES/zsh/vim-mode.zsh
+[ -f ~/.vim-mode.zsh ] && source ~/.vim-mode.zsh
 
 # Ruby gems
 if (( $+commands[ruby] )) ; then
@@ -209,7 +208,7 @@ unsetopt extendedglob
 [ -f ~/.zshrc.priv ] && source ~/.zshrc.priv
 
 # source every .zsh file in this rep
-for config_file ($ZSH/**/*.zsh) source $config_file
+# for config_file ($ZSH/**/*.zsh) source $config_file
 
 bindkey -v
 KEYTIMEOUT=1 # Fix the delay

@@ -1,6 +1,0 @@
-#!/bin/sh
-
-./script/setup "xorg"
-./script/info.sh "Updating Xresources"
-xrdb -merge ~/.Xresources 2>/dev/null
-exit 0

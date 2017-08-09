@@ -59,6 +59,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'mhinz/vim-startify'
+Plug 'chriskempson/base16-vim'
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
@@ -82,14 +83,14 @@ Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
 
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-Plug 'Shougo/neoinclude.vim'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'zchee/deoplete-clang'
-Plug 'carlitux/deoplete-ternjs'
-Plug 'artur-shaik/vim-javacomplete2'
-Plug 'kiddos/deoplete-cpp'
-Plug 'zchee/deoplete-jedi'
+"Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+"Plug 'Shougo/neoinclude.vim'
+"Plug 'zchee/deoplete-go', { 'do': 'make'}
+"Plug 'zchee/deoplete-clang'
+"Plug 'carlitux/deoplete-ternjs'
+"Plug 'artur-shaik/vim-javacomplete2'
+"Plug 'kiddos/deoplete-cpp'
+"Plug 'zchee/deoplete-jedi'
 
 " ALE - Linting
 "Plug 'w0rp/ale'
@@ -264,7 +265,7 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 "
 
 " Gitgutter
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 " Set laststatus to two, to enable lightline
 set laststatus=2
