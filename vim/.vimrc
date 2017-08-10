@@ -93,8 +93,8 @@ Plug 'godlygeek/tabular'
 "Plug 'zchee/deoplete-jedi'
 
 " ALE - Linting
-"Plug 'w0rp/ale'
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
+"Plug 'neomake/neomake'
 Plug 'benjie/neomake-local-eslint.vim'
 
 " Testing
@@ -121,7 +121,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'mhartington/oceanic-next'
 
 call plug#end()
-autocmd! BufWritePost * Neomake
+autocmd! BufWritePost * silent! Neomake
 
 "
 " UI 
@@ -177,35 +177,27 @@ set foldlevelstart=99
 "
 " UI
 "
-let g:PaperColor_Dark_Override = { 'background' : '#ff5faf' }
+set t_Co=256
 set background=dark
 
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.dark': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
 silent! colorscheme PaperColor
-hi Normal ctermbg=NONE ctermfg=254
+"hi Normal ctermbg=NONE ctermfg=254
 "hi Search ctermbg=LightBlue guibg=blue
 " "hi CursorLineNr ctermfg=4
-"hi EndOfBuffer ctermfg=12 guifg=blue
+hi EndOfBuffer ctermfg=12 guifg=blue
 hi SpecialKey ctermfg=red cterm=bold guifg=red
 
 " HIghlight Bad spaces
 set listchars=nbsp:¬,tab:\ \ 
 ",trail:-
-
 set list
-
-
-function Toggle_background()
-    if &background ==# 'dark'
-        set background=light
-        colo PaperColor
-    else
-        set background=dark
-        hi Normal ctermbg=NONE
-    endif
-    echom 'Background was changed'
-endfunction 
-
-" hi current line
 set cursorline
 
 "
@@ -462,9 +454,9 @@ let g:gitgutter_sign_removed = '|'
 let g:gitgutter_sign_removed_first_line = '__'
 let g:gitgutter_sign_modified_removed = '__'
 
-hi GitGutterAdd guifg=#0fd700
-hi GitGutterChange guifg=yellow
-hi GitGutterDelete guifg=red
+"hi GitGutterAdd guifg=#0fd700 ctermfg=32
+"hi GitGutterChange guifg=yellow ctermfg=33
+"hi GitGutterDelete guifg=red ctermfg=31
 
 " Python {{{
 let g:neomake_python_flake8_maker = {
@@ -479,3 +471,16 @@ endfunction
 function! Multiple_cursors_after()
     let b:deoplete_disable_auto_complete = 0
 endfunction
+
+" Cursorshape (for gnome-terminal)
+if has("autocmd")
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+  au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' | 
+    \   silent execute '!echo -ne "\e[6 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[4 q"' | redraw! |
+    \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
+set timeoutlen=1000 ttimeoutlen=0
