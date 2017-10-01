@@ -109,15 +109,24 @@ if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
   gpg-connect-agent /bye >/dev/null 2>&1
 fi
 
+#
+# To enable forwarding of your gpg-agent, add the following to your ssh config
+# RemoteForward /home/<server-user>/.gnupg/S.gpg-agent.ssh /run/user/<client-user-gid>/gnupg/S.gpg-agent.ssh
+#
+# You must also add the following to the sshd config on the server (for your user)
+# StreamLocalBindUnlink yes
+#
+
 # Set SSH to use gpg-agent
 unset SSH_AGENT_PID
 if [[ -n $SSH_CONNECTION ]]; then
-    export SSH_AUTH_SOCK="~/.gnupg/S.gpg-agent.ssh"
+    export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
 else
     if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
       export SSH_AUTH_SOCK="/run/user/${GID}/gnupg/S.gpg-agent.ssh"
     fi
 fi
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export EDITOR=vim
