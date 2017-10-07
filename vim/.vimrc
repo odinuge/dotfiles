@@ -59,16 +59,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'mhinz/vim-startify'
-Plug 'chriskempson/base16-vim'
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
-Plug 'morhetz/gruvbox'
-Plug 'romainl/Apprentice'
-Plug 'jdkanani/vim-material-theme'
-Plug 'kabbamine/yowish.vim'
-
+Plug 'jacoborus/tender.vim'
+Plug 'joshdick/onedark.vim'
 
 " Other tools
 Plug 'ervandew/supertab'
@@ -83,42 +79,27 @@ Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
 
 " Autocomplete
-"Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-"Plug 'Shougo/neoinclude.vim'
-"Plug 'zchee/deoplete-go', { 'do': 'make'}
-"Plug 'zchee/deoplete-clang'
-"Plug 'carlitux/deoplete-ternjs'
-"Plug 'artur-shaik/vim-javacomplete2'
-"Plug 'kiddos/deoplete-cpp'
-"Plug 'zchee/deoplete-jedi'
+Plug 'maralla/completor.vim'
+"Plug 'flowtype/vim-flow'
 
 " ALE - Linting
 Plug 'w0rp/ale'
-"Plug 'neomake/neomake'
-Plug 'benjie/neomake-local-eslint.vim'
 
-" Testing
-"Plug 'dansomething/vim-eclim'
-
-Plug 'freitass/todo.txt-vim'
-"Plug 'flowtype/vim-flow'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'wakatime/vim-wakatime'
-Plug 'Chiel92/vim-autoformat'
 Plug 'jebaum/vim-tmuxify'
-Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-rooter'
 Plug 'critiqjo/lldb.nvim'
-"Plug 'othree/javascript-libraries-syntax.vim'
-"Plug 'mxw/vim-jsx'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mxw/vim-jsx'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'prettier/vim-prettier', {
+    \ 'do': 'npm install',
+    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
 
+Plug 'sbdchd/neoformat'
 
-Plug 'joshdick/onedark.vim'
-Plug 'mhartington/oceanic-next'
 
 call plug#end()
 autocmd! BufWritePost * silent! Neomake
@@ -163,6 +144,8 @@ filetype plugin indent on
 
 set undofile
 set undodir=~/.VIM_UNDO_FILES
+set backupdir=~/.VIM_BACKUP_FILES
+set directory=~/.VIM_DIRECTORY_FILES
 
 " Fix wrapping
 set whichwrap+=<,>,h,l,[,]
@@ -177,7 +160,7 @@ set foldlevelstart=99
 "
 " UI
 "
-set t_Co=256
+"set t_Co=256
 set background=dark
 
 let g:PaperColor_Theme_Options = {
@@ -187,18 +170,30 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
-silent! colorscheme PaperColor
+"silent! colorscheme PaperColor
 "hi Normal ctermbg=NONE ctermfg=254
 "hi Search ctermbg=LightBlue guibg=blue
 " "hi CursorLineNr ctermfg=4
 hi EndOfBuffer ctermfg=12 guifg=blue
 hi SpecialKey ctermfg=red cterm=bold guifg=red
+let g:one_allow_italics = 1
+silent! colorscheme one
+"if (empty($TMUX))
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+"endif
+"hi Normal ctermbg=NONE ctermfg=254
+call one#highlight('Normal', '', '', 'none')
+
+
+
 
 " HIghlight Bad spaces
 set listchars=nbsp:¬,tab:\ \ 
 ",trail:-
 set list
-set cursorline
+"set cursorline
 
 "
 " Mapping
@@ -247,8 +242,8 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 " smooooooth scroll!
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+"noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+"noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
@@ -337,16 +332,21 @@ command! Scroll call s:scroll()
 
 " Share yank across all sessions!!
 let g:EasyClipShareYanks = 1
-
+let g:EasyClipEnableBlackHoleRedirect = 0
+"
 " Ale config
+let g:ale_cpp_clang_options = '-std=c++14'
+"let g:ale_linters={
+"      \ 'cpp': [ 'clang', 'clangtidy', 'cppcheck', 'cpplint', 'gcc' ]
+"      \ }
 let g:ale_sign_error = '•'
 let g:ale_sign_warning = '•'
 let g:ale_statusline_format = ['%d error(s)', '(%d)', 'OK']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-hi ALEErrorSign ctermfg=1 ctermbg=0
-hi ALEwarningSign ctermfg=3 ctermbg=0
+hi ALEErrorSign ctermfg=1
+hi ALEwarningSign ctermfg=3
 hi NeomakeErrorSign ctermfg=1
 hi NeomakeWarningSign ctermfg=3
 hi NeomakeError ctermfg=1 cterm=underline 
@@ -389,15 +389,15 @@ let g:startify_custom_header = [
             \ '                           \/__/    \/_/\/_/\/_/\/_/                    ',
             \ ]                          
 
-"let g:lightline = {
-"            \ 'colorscheme': 'wombat',
-"            \ 'active': {
-"            \   'left': [ [ 'mode'],['filename', 'modified'], ['ALE', 'paste' ]]
-"            \ },
-"            \ 'component': {
-"            \   'ALE': '%{ALEGetStatusLine()}',
-"            \ }
-"            \ }
+let g:lightline = {
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \   'left': [ [ 'mode'],['filename', 'modified'], ['ALE', 'paste' ]]
+            \ },
+            \ 'component': {
+            \   'ALE': '%{ALEGetStatusLine()}',
+            \ }
+            \ }
 
 let g:rooter_silent_chdir = 1
 let g:rooter_patterns = ['Makefile', '.git/']
@@ -409,13 +409,6 @@ let g:neomake_cpp_clang_maker = {
    \ 'args': ['-std=gnu++14'],
    \ }
 
-
-let g:neoformat_javascript_eslint = {
-            \ 'exe': 'node_modules/eslint/bin/eslint.js',
-            \ 'args': ['--fix', "-c", "$PWD/.eslintrc", "%"],
-            \ }
-
-let g:neoformat_enabled_javascript = ['eslint']
 let g:neomake_arduino_avrgcc_maker = {
             \ 'exe': '/usr/share/arduino/hardware/tools/avr/bin/avr-g++',
             \ 'args': [
@@ -483,4 +476,20 @@ if has("autocmd")
     \ endif
   au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
+
 set timeoutlen=1000 ttimeoutlen=0
+
+let g:neoformat_enabled_javascript = ['prettier']
+let g:ale_javascript_prettier_use_local_config=1
+let g:ale_fixers = {
+            \   'javascript': ['prettier'],
+            \   'python': ['yapf'],
+            \   'c': ['clang-format'],
+            \   'c++': ['clang-format']
+            \}
+
+let g:ale_linters = {
+            \ 'go': ['gometalinter', 'gofmt'],
+            \ 'python': ['pycodestyle']
+            \}
+let g:ale_fix_on_save = 1

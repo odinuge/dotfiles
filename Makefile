@@ -11,7 +11,7 @@ help:
 	@echo -e " - atom-packages-backup"
 
 vim:
-	@mkdir -p ~/.vim
+	@mkdir -p ~/.vim ~/.VIM_TMP_FILES ~/.VIM_BACKUP_FILES ~/.VIM_UNDO_FILES
 	stow vim
 	@./script/info.sh "Downloading Plug"
 	@curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
