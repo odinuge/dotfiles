@@ -7,8 +7,7 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="refined"
-#ZSH_THEME="robbyrussell"
+ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -54,7 +53,7 @@ ZSH_THEME="refined"
 # Add wisely, as too many plugins slow down shell startup.
 #export ZSH_TMUX_AUTOSTART=true
 #export ZSH_TMUX_AUTOCONNECT=false
-plugins=(zsh-syntax-highlighting git django archlinux tmuxinator golang go )
+plugins=(zsh-syntax-highlighting git django archlinux tmuxinator golang go docker zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 [ -f $HOME/src/dotfiles-github/zsh/aliases.zsh ] && source $HOME/src/dotfiles-github/zsh/aliases.zsh
@@ -153,7 +152,7 @@ export DOTFILES=$(dirname $(dirname $(readlink -nf ~/.zshrc)))
 
 # Fix TERM
 if [ "$TERM" = "xterm" ]; then
-    export TERM="xterm-256color"
+    #export TERM="xterm-256color"
 fi
 if [ "$TERM" = "screen-256color" ]; then
     # Awesome
@@ -243,6 +242,10 @@ bindkey "\e[A" history-beginning-search-backward-end
 bindkey "\e[B" history-beginning-search-forward-end
 
 
+# Enable shift-tab to tab backwards
+bindkey '^[[Z' reverse-menu-complete
+
+
 export CLASSPATH=".:./"
 if [ -d ~/src/javalibs/ ]; then
     for file in ~/src/javalibs/*; do
@@ -250,3 +253,7 @@ if [ -d ~/src/javalibs/ ]; then
     done
 fi
 export PATH=$PATH:/usr/local/go/bin
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+alias tmux='env TERM=screen-256color tmux'
+
+source $HOME/.cargo/env
