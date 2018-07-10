@@ -20,6 +20,13 @@
   'm m': 'choose-pane:focus-last-focused'
   'ctrl-shift-a': 'significant-other:toggle'
 
+'atom-text-editor.vim-mode-plus.operator-pending-mode, atom-text-editor.vim-mode-plus.visual-mode':
+  'i altgraph {': 'vim-mode-plus:inner-curly-bracket'
+  'i altgraph }': 'vim-mode-plus:inner-curly-bracket'
+  'a altgraph {': 'vim-mode-plus:a-curly-bracket'
+  'a altgraph }': 'vim-mode-plus:a-curly-bracket'
+
+
 '.markdown-preview':
   '-': 'choose-pane:start'
   'm m': 'choose-pane:focus-last-focused'

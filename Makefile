@@ -30,10 +30,8 @@ tmux:
 
 zsh:
 	stow zsh
-	curl -fsSL -o .tmp_installOhMyZsh.sh https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
-	chmod +x .tmp_installOhMyZsh.sh
-	sh .tmp_installOhMyZsh.sh
-	rm .tmp_installOhMyZsh.sh
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	(cd ~/.oh-my-zsh/custom/plugins && git clone git://github.com/zsh-users/zsh-syntax-highlighting.git || true)
 
 xorg:
 	stow xorg
@@ -43,9 +41,9 @@ atom:
 	# Run `make atom-packages-restore` to install packages
 
 atom-packages-restore:
-	apm install --packages-file   atom/.atom/package.list
+	apm-beta install --packages-file   atom/.atom/package.list
 
 atom-packages-backup:
-	apm list --installed --bare > atom/.atom/package.list
+	apm-beta list --installed --bare > atom/.atom/package.list
 
 .PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup
