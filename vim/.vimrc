@@ -302,7 +302,9 @@ let g:ale_fixers = {
             \   'python': ['yapf', 'isort'],
             \   'java': ['google_java_format'],
             \   'rust': ['rustfmt'],
+            \   'markdown': ['prettier'],
             \   'c++': ['clang-format'],
+            \   'haskell': ['hfmt'],
             \   'sh': ['shfmt']
             \}
 
