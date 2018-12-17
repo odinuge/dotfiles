@@ -11,7 +11,7 @@ help:
 	@echo -e " - atom-packages-backup"
 
 vim:
-	@mkdir -p ~/.vim ~/.VIM_TMP_FILES ~/.VIM_BACKUP_FILES ~/.VIM_UNDO_FILES
+	@mkdir -p ~/.vim ~/.VIM_TMP_FILES ~/.VIM_BACKUP_FILES ~/.VIM_UNDO_FILES ~/.VIM_DIRECTORY_FILES
 	stow vim
 	@./script/info.sh "Downloading Plug"
 	@curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -24,14 +24,15 @@ vim:
 tmux:
 	stow tmux
 	@./script/info.sh "Download tpm - Tmux Plugin Manager"
+	bin/git-clone-or-sync https://github.com/jonmosco/kube-tmux ~/.tmux/plugins/kube-tmux
 	bin/git-clone-or-sync https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	~/.tmux/plugins/tpm/scripts/install_plugins.sh
 	~/.tmux/plugins/tpm/bin/update_plugins all
 
 zsh:
 	stow zsh
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	(cd ~/.oh-my-zsh/custom/plugins && git clone git://github.com/zsh-users/zsh-syntax-highlighting.git || true)
+	curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
+	bin/git-clone-or-sync https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 xorg:
 	stow xorg

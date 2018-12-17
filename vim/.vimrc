@@ -79,8 +79,11 @@ Plug 'easymotion/vim-easymotion'
 Plug 'jparise/vim-graphql'
 
 " Autocomplete
-Plug 'maralla/completor.vim'
+"Plug 'maralla/completor.vim'
 "Plug 'flowtype/vim-flow'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'wokalski/autocomplete-flow'
+Plug 'matze/vim-move'
 
 " ALE - Linting
 Plug 'w0rp/ale'
@@ -92,6 +95,11 @@ Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'mxw/vim-jsx'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'PotatoesMaster/i3-vim-syntax'
+
+Plug 'vim-scripts/Conque-GDB'
+
+Plug 'reasonml-editor/vim-reason-plus'
+Plug 'roxma/vim-hug-neovim-rpc'
 
 
 call plug#end()
@@ -264,7 +272,7 @@ let g:startify_bookmarks = [
 
 
 "let g:rooter_silent_chdir = 1
-"let g:rooter_patterns = ['Makefile', '.git/']
+let g:rooter_patterns = ['Makefile', '.git/']
 
 let g:gitgutter_sign_added = '|'
 let g:gitgutter_sign_modified = '|'
@@ -293,10 +301,12 @@ let g:ale_sign_error = '•'
 let g:ale_sign_warning = '•'
 
 let g:ale_javascript_prettier_use_local_config=1
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 let g:ale_cpp_clang_options = '-std=c++14'
+let g:ale_asm_gcc_executable = 'arm-none-eabi-gcc'
 let g:ale_fixers = {
             \   'javascript': ['prettier'],
+            \   'graphql': ['prettier'],
             \   'css': ['prettier'],
             \   'c': ['clang-format'],
             \   'python': ['yapf', 'isort'],
@@ -309,14 +319,20 @@ let g:ale_fixers = {
             \}
 
 let g:ale_linters = {
-            \ 'go': ['gometalinter', 'gofmt'],
+            \ 'go': ['go build', 'go vet','go imports','gometalinter', 'gofmt'],
             \ 'cpp': [ 'clang', 'clangtidy', 'cppcheck', 'cpplint', 'gcc' ],
             \ 'rust': ['rustfmt', 'rustc'],
-            \ 'javascript': ['eslint', 'flow','prettier'],
+            \ 'javascript': ['prettier','eslint', 'flow'],
             \ 'css': ['stylelint', 'prettier'],
-            \ 'python': ['pycodestyle', 'flake8'],
-            \ 'graphql': ['prettier', 'eslint'],
+            \ 'python': ['flake8'],
+            \ 'graphql': ['prettier'],
             \}
+nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
+
 
 let g:completor_clang_binary = '/usr/bin/clang'
 let g:completor_racer_binary = '/home/odin/.cargo/bin/racer'
+let g:deoplete#enable_at_startup = 1
+set pyxversion=3
+let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
+let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
