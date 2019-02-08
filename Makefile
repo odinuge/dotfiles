@@ -9,6 +9,8 @@ help:
 	@echo -e " - atom"
 	@echo -e " - atom-packages-restore"
 	@echo -e " - atom-packages-backup"
+	@echo -e " - arch-backup"
+	@echo -e " - arch-restore"
 
 vim:
 	@mkdir -p ~/.vim ~/.VIM_TMP_FILES ~/.VIM_BACKUP_FILES ~/.VIM_UNDO_FILES ~/.VIM_DIRECTORY_FILES
@@ -47,4 +49,13 @@ atom-packages-restore:
 atom-packages-backup:
 	apm-beta list --installed --bare > atom/.atom/package.list
 
-.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup
+arch-backup:
+	pacman -Qqetn > archlinux/pkglist.txt
+	pacman -Qqetm > archlinux/pkglist-aur.txt
+
+arch-restore:
+	sudo pacman -S --needed - < archlinux/pkglist.txt
+	@echo "Remember to install yay"
+	yay -S --needed - < archlinux/pkglist-aur.txt
+
+.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore

@@ -1,0 +1,16 @@
+browserpass
+chromium-widevine
+doctl
+etcher-bin
+gnome-shell-extension-no-topleft-hot-corner
+kubectx
+kubeless
+kubernetes-helm
+kustomize-bin
+lastpass
+mato-icons
+mkcert
+mkinitcpio-tpm-encrypt
+mkinitcpio-tpm2-encrypt
+ttf-google-fonts-git
+yay
