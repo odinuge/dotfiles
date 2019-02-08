@@ -14,31 +14,28 @@ call plug#begin('~/.vim/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
-
-" GPG enc support
-Plug 'jamessan/vim-gnupg'
+Plug 'racer-rust/vim-racer'
+Plug 'previm/previm'
+Plug 'kaicataldo/material.vim'
 
 " Better undo support
 Plug 'mbbill/undotree'
+
+" GPG enc support
+Plug 'jamessan/vim-gnupg'
 
 " Language spesific stuff
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-markdown'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'jstemmer/gotags'
 Plug 'pangloss/vim-javascript'
 Plug 'vim-latex/vim-latex'
-Plug 'xuhdev/vim-latex-live-preview'
-Plug 'shime/vim-livedown'
-
 
 " Fuzzy searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Notes
-Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-speeddating'
 
 " Tmux
@@ -52,13 +49,10 @@ Plug 'dietsche/vim-lastplace'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'peterhurford/send.vim'
 
 " UI
 Plug 'scrooloose/nerdtree'
-Plug 'sheerun/vim-polyglot'
 Plug 'mhinz/vim-startify'
-Plug 'dracula/vim'
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
@@ -69,37 +63,40 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 " Other tools
 Plug 'ervandew/supertab'
-Plug 'tpope/vim-surround'
-Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-repeat'
-Plug 'AndrewRadev/splitjoin.vim'
 Plug 'svermeulen/vim-easyclip'
 Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'jparise/vim-graphql'
+Plug 'rust-lang/rust.vim'
 
 " Autocomplete
 "Plug 'maralla/completor.vim'
 "Plug 'flowtype/vim-flow'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'wokalski/autocomplete-flow'
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'wokalski/autocomplete-flow'
 Plug 'matze/vim-move'
 
 " ALE - Linting
 Plug 'w0rp/ale'
 
-Plug 'wakatime/vim-wakatime'
 Plug 'jebaum/vim-tmuxify'
 Plug 'airblade/vim-rooter'
-Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'mxw/vim-jsx'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'tpope/vim-repeat'
 
-Plug 'vim-scripts/Conque-GDB'
 
-Plug 'reasonml-editor/vim-reason-plus'
-Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'Valloric/YouCompleteMe'
+
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'roxma/nvim-yarp'
+"Plug 'roxma/vim-hug-neovim-rpc'
+"Plug 'sebastianmarkow/deoplete-rust'
+
+"Plug 'vim-scripts/Conque-GDB'
+
+"Plug 'reasonml-editor/vim-reason-plus'
+"Plug 'roxma/vim-hug-neovim-rpc'
 
 
 call plug#end()
@@ -138,7 +135,7 @@ set shiftwidth=4
 set expandtab
 set smarttab
 
-set encoding=utf8
+set encoding=utf-8
 
 filetype plugin indent on
 
@@ -181,6 +178,7 @@ silent! colorscheme one
     set termguicolors
   endif
 "endif
+hi Normal guibg=NONE ctermbg=NONE
 call one#highlight('Normal', '', '', 'none')
 
 
@@ -301,7 +299,7 @@ let g:ale_sign_error = '•'
 let g:ale_sign_warning = '•'
 
 let g:ale_javascript_prettier_use_local_config=1
-" let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1
 let g:ale_cpp_clang_options = '-std=c++14'
 let g:ale_asm_gcc_executable = 'arm-none-eabi-gcc'
 let g:ale_fixers = {
@@ -309,11 +307,12 @@ let g:ale_fixers = {
             \   'graphql': ['prettier'],
             \   'css': ['prettier'],
             \   'c': ['clang-format'],
-            \   'python': ['yapf', 'isort'],
+            \   'python': ['isort', 'black'],
             \   'java': ['google_java_format'],
             \   'rust': ['rustfmt'],
             \   'markdown': ['prettier'],
             \   'c++': ['clang-format'],
+            \   'yaml': ['prettier'],
             \   'haskell': ['hfmt'],
             \   'sh': ['shfmt']
             \}
@@ -321,12 +320,13 @@ let g:ale_fixers = {
 let g:ale_linters = {
             \ 'go': ['go build', 'go vet','go imports','gometalinter', 'gofmt'],
             \ 'cpp': [ 'clang', 'clangtidy', 'cppcheck', 'cpplint', 'gcc' ],
-            \ 'rust': ['rustfmt', 'rustc'],
             \ 'javascript': ['prettier','eslint', 'flow'],
             \ 'css': ['stylelint', 'prettier'],
             \ 'python': ['flake8'],
+            \ 'yaml': ['prettier'],
             \ 'graphql': ['prettier'],
             \}
+" \ 'rust': ['rustfmt', 'rustc'],
 nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
 
 
@@ -336,3 +336,12 @@ let g:deoplete#enable_at_startup = 1
 set pyxversion=3
 let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
 let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
+let g:previm_open_cmd = 'chromium'

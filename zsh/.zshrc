@@ -13,6 +13,7 @@ plugins=(
     go
     docker
     kubectl
+    pass
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -106,3 +107,5 @@ unsetopt extendedglob
 
 # Enter tmux
 if [ -z $TMUX ]; then exec tmux; fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
