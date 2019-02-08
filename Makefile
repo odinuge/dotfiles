@@ -11,6 +11,7 @@ help:
 	@echo -e " - atom-packages-backup"
 	@echo -e " - arch-backup"
 	@echo -e " - arch-restore"
+	@echo -e " - alacritty"
 
 vim:
 	@mkdir -p ~/.vim ~/.VIM_TMP_FILES ~/.VIM_BACKUP_FILES ~/.VIM_UNDO_FILES ~/.VIM_DIRECTORY_FILES
@@ -43,6 +44,9 @@ atom:
 	stow atom
 	# Run `make atom-packages-restore` to install packages
 
+alacritty:
+	stow alacritty
+
 atom-packages-restore:
 	apm-beta install --packages-file   atom/.atom/package.list
 
@@ -58,4 +62,4 @@ arch-restore:
 	@echo "Remember to install yay"
 	yay -S --needed - < archlinux/pkglist-aur.txt
 
-.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore
+.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty
