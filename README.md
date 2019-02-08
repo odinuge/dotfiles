@@ -47,6 +47,7 @@ Commands:
  - arch-backup
  - arch-restore
  - alacritty
+ - gitconfig
 ```
 
 MIT © [Odin Ugedal](mailto:odin@ugedal.com)

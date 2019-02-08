@@ -52,6 +52,9 @@ atom:
 alacritty:
 	stow alacritty
 
+gitconfig:
+	stow gitconfig
+
 atom-packages-restore:
 	apm-beta install --packages-file   atom/.atom/package.list
 
@@ -67,4 +70,4 @@ arch-restore:
 	@echo "Remember to install yay"
 	yay -S --needed - < archlinux/pkglist-aur.txt
 
-.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty all
+.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty gitconfig all
