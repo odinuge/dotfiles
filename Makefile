@@ -1,7 +1,9 @@
+
 help:
 	@echo -e "Odin Ugedal - Dotfiles"
 	@echo -e "Commands:"
 	@echo -e " - vim"
+	@echo -e " - all"
 	@echo -e " - atom"
 	@echo -e " - tmux"
 	@echo -e " - zsh"
@@ -12,6 +14,9 @@ help:
 	@echo -e " - arch-backup"
 	@echo -e " - arch-restore"
 	@echo -e " - alacritty"
+
+all:
+	make vim tmux zsh xorg alacritty 
 
 vim:
 	@mkdir -p ~/.vim ~/.VIM_TMP_FILES ~/.VIM_BACKUP_FILES ~/.VIM_UNDO_FILES ~/.VIM_DIRECTORY_FILES
@@ -62,4 +67,4 @@ arch-restore:
 	@echo "Remember to install yay"
 	yay -S --needed - < archlinux/pkglist-aur.txt
 
-.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty
+.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty all

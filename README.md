@@ -35,6 +35,7 @@ $ make vim zsh tmux
 $ make help
 Odin Ugedal - Dotfiles
 Commands:
+ - all
  - vim
  - atom
  - tmux
@@ -45,6 +46,7 @@ Commands:
  - atom-packages-backup
  - arch-backup
  - arch-restore
+ - alacritty
 ```
 
 MIT © [Odin Ugedal](mailto:odin@ugedal.com)
