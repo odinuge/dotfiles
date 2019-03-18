@@ -14,6 +14,8 @@ help:
 	@echo -e " - arch-backup"
 	@echo -e " - arch-restore"
 	@echo -e " - alacritty"
+	@echo -e " - term"
+	@echo -e " - archlive"
 	@echo -e " - gitconfig"
 	@echo -e " - dockerconfig"
 

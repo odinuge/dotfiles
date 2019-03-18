@@ -35,8 +35,8 @@ $ make vim zsh tmux
 $ make help
 Odin Ugedal - Dotfiles
 Commands:
- - all
  - vim
+ - all
  - atom
  - tmux
  - zsh
@@ -47,7 +47,10 @@ Commands:
  - arch-backup
  - arch-restore
  - alacritty
+ - term
+ - archlive                 # Build Arch Linux live iso (run as root!)
  - gitconfig
+ - dockerconfig
 ```
 
 MIT © [Odin Ugedal](mailto:odin@ugedal.com)
