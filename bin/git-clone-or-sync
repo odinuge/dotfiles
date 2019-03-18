@@ -7,8 +7,7 @@ LOCALREPO=$2
 
 LOCALREPO_VC_DIR=$LOCALREPO/.git
 
-if [ -z $LOCALREPO_VC_DIR ]
-then
+if [ ! -d $LOCALREPO_VC_DIR ]; then
     git clone $REPOSRC $LOCALREPO
 else
     cd $LOCALREPO
