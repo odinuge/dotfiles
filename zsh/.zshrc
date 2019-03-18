@@ -1,8 +1,8 @@
-export ZSH=/home/odin/.oh-my-zsh
+export ZSH=/home/$USER/.oh-my-zsh
 
 export DOTFILES=$(dirname $(dirname $(readlink -nf ~/.zshrc)))
 
-ZSH_THEME="af-magic"
+ZSH_THEME="refined"
 
 plugins=(
     zsh-syntax-highlighting
@@ -38,6 +38,7 @@ FILES=(
 PATHS=(
     "$HOME/.local/bin"
     "$DOTFILES/bin"
+    "$HOME/bin"
     "$HOME/.yarn/bin"
     "$HOME/go/bin"
     "$HOME/.config/yarn/global/node_modules/.bin"
@@ -106,6 +107,6 @@ bindkey '^[[Z' reverse-menu-complete
 unsetopt extendedglob
 
 # Enter tmux
-if [ -z $TMUX ]; then exec tmux; fi
+if [ -z $TMUX ] && [[ "$(tty)" =~ /dev/pts/* ]]; then exec tmux; fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

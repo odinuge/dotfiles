@@ -18,6 +18,7 @@ Plug 'racer-rust/vim-racer'
 Plug 'previm/previm'
 Plug 'kaicataldo/material.vim'
 
+Plug 'rbong/vim-flog'
 " Better undo support
 Plug 'mbbill/undotree'
 
@@ -68,6 +69,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'jparise/vim-graphql'
 Plug 'rust-lang/rust.vim'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 
 " Autocomplete
 "Plug 'maralla/completor.vim'
@@ -75,6 +77,7 @@ Plug 'rust-lang/rust.vim'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'wokalski/autocomplete-flow'
 Plug 'matze/vim-move'
+Plug 'digitaltoad/vim-pug'
 
 " ALE - Linting
 Plug 'w0rp/ale'
@@ -87,16 +90,6 @@ Plug 'tpope/vim-repeat'
 
 
 Plug 'Valloric/YouCompleteMe'
-
-"Plug 'Shougo/deoplete.nvim'
-"Plug 'roxma/nvim-yarp'
-"Plug 'roxma/vim-hug-neovim-rpc'
-"Plug 'sebastianmarkow/deoplete-rust'
-
-"Plug 'vim-scripts/Conque-GDB'
-
-"Plug 'reasonml-editor/vim-reason-plus'
-"Plug 'roxma/vim-hug-neovim-rpc'
 
 
 call plug#end()
@@ -179,7 +172,7 @@ silent! colorscheme one
   endif
 "endif
 hi Normal guibg=NONE ctermbg=NONE
-call one#highlight('Normal', '', '', 'none')
+"call one#highlight('Normal', '', '', 'none')
 
 
 
@@ -202,7 +195,7 @@ nnoremap <leader>f            :FZF<CR>
 nnoremap <leader>u            :UndotreeToggle<CR>
 nnoremap <leader>m            :LivedownPreview<CR>
 nnoremap <leader>e            :NERDTreeToggle<CR>
-nnoremap <Leader>a            :Ag<CR>
+nnoremap <Leader>a            :Rg<CR>
 nnoremap <Leader>c            :call Toggle_background()<CR>
 nnoremap <Leader>t            :TagbarToggle<CR>
 nnoremap <Leader>b            :Buffers<CR>
@@ -345,3 +338,7 @@ augroup PrevimSettings
     autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 augroup END
 let g:previm_open_cmd = 'chromium'
+
+" add yaml stuffs
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab

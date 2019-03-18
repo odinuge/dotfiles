@@ -77,10 +77,11 @@ arch-backup:
 archlive:
 	rm -rf archlive
 	cp -r /usr/share/archiso/configs/releng/ archlive
-	cat archlinux/pkglist.txt | grep -v -E "xf[wc]|gnome|jdk|xorg|stack|baobab|thunderbird|ghc|networkmanager|virt-manager|libvirtd" >> archlive/packages.x86_64
-	echo "cd /root/dotfiles" >> archlive/airootfs/root/customize_airootfs.sh
-	echo "mv .zshrc .zshrc-old" >> archlive/airootfs/root/customize_airootfs.sh
-	echo "make vim zsh tmux" >> archlive/airootfs/root/customize_airootfs.sh
+	cat archlinux/pkglist-liveiso.txt >> archlive/packages.x86_64
+	echo "cd /root/dotfiles                   " >> archlive/airootfs/root/customize_airootfs.sh
+	echo "mv ../.zshrc ../.zshrc-old || true  " >> archlive/airootfs/root/customize_airootfs.sh
+	echo "make term zsh vim tmux              " >> archlive/airootfs/root/customize_airootfs.sh
+	echo "pacman -Rns grml-zsh-config         " >> archlive/airootfs/root/customize_airootfs.sh
 	mkdir -p archlive/airootfs/etc/skel/
 	git clone .git archlive/airootfs/etc/skel/dotfiles
 	cd archlive && ./build.sh -v

@@ -161,25 +161,25 @@ colors:
 
   # Normal colors
   normal:
-    black: "0x666666"
-    red: "0xeb606b"
-    green: "0xc3e88d"
-    yellow: "0xf7eb95"
-    blue: "0x80cbc4"
-    magenta: "0xff2f90"
-    cyan: "0xaeddff"
-    white: "0xffffff"
+    black: "0x000000"
+    red: "0xfc4346"
+    green: "0x50fb7c"
+    yellow: "0xf0fb8c"
+    blue: "0x49baff"
+    magenta: "0xfc4cb4"
+    cyan: "0x8be9fe"
+    white: "0xededec"
 
   # Bright colors
   bright:
-    black: "0xff262b"
-    red: "0xeb606b"
-    green: "0xc3e88d"
-    yellow: "0xf7eb95"
-    blue: "0x7dc6bf"
-    magenta: "0x6c71c4"
-    cyan: "0x35434d"
-    white: "0xffffff"
+    black: "0x555555"
+    red: "0xfc4346"
+    green: "0x50fb7c"
+    yellow: "0xf0fb8c"
+    blue: "0x49baff"
+    magenta: "0xfc4cb4"
+    cyan: "0x8be9fe"
+    white: "0xededec"
 
   # Indexed Colors
   #

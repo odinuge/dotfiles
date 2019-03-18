@@ -5,17 +5,24 @@
 zle-keymap-select () {
 if [ $KEYMAP = vicmd ]; then
     # the command mode for vi
-    echo -ne "\e[2 q"
+    if [[ $TTY =~ /dev/pts* ]]; then
+        echo -ne "\e[2 q"
+    else 
+        echo -ne "\e[?16;0;112c"
+    fi
 else
     # the insert mode for vi
-    echo -ne "\e[6 q"
+    if [[ $TTY =~ /dev/pts* ]]; then
+        echo -ne "\e[6 q"
+    else 
+        echo -ne "\e[?0;0;112c"
+    fi
 fi
 }
 
 
 zle -N zle-keymap-select
 zle -N zle-line-init zle-keymap-select
-echo -ne "\e[6 q"
 
 bindkey -v
 KEYTIMEOUT=1 # Fix the delay
@@ -114,4 +121,8 @@ bindkey '^G' what-cursor-position
 
 zle -N zle-keymap-select
 zle -N zle-line-init zle-keymap-select
-echo -ne "\e[6 q"
+if [[ $TTY =~ /dev/pts* ]]; then
+    echo -ne "\e[6 q"
+else 
+    echo -ne "\e[?0;0;112c"
+fi

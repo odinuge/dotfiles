@@ -29,3 +29,8 @@ function merge-kubeconf() {
     local OUTPUT=$(KUBECONFIG="$NEW_CONF:$DEFAULT_CONF" kubectl config view --flatten)
     echo "$OUTPUT"> $DEFAULT_CONF
 }
+
+function slack-cli(){
+    tmux rename-window -t${TMUX_PANE} "slack ${1}"
+    pass show "tokens/slack/${1}" | xargs slack-term -token
+}

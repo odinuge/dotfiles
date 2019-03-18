@@ -6,3 +6,5 @@
 	gpgsign = true
 [rerere]
 	enabled = true
+[diff "gpg"]
+	textconv = gpg --no-tty --decrypt
