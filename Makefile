@@ -14,6 +14,8 @@ help:
 	@echo -e " - arch-backup"
 	@echo -e " - arch-restore"
 	@echo -e " - alacritty"
+	@echo -e " - gitconfig"
+	@echo -e " - dockerconfig"
 
 all:
 	make vim tmux zsh xorg alacritty 
@@ -42,6 +44,9 @@ zsh:
 	curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
 	bin/git-clone-or-sync https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
+term:
+	stow term
+
 xorg:
 	stow xorg
 
@@ -55,6 +60,9 @@ alacritty:
 gitconfig:
 	stow gitconfig
 
+dockerconfig:
+	stow docker
+
 atom-packages-restore:
 	apm-beta install --packages-file   atom/.atom/package.list
 
@@ -65,9 +73,20 @@ arch-backup:
 	pacman -Qqetn > archlinux/pkglist.txt
 	pacman -Qqetm > archlinux/pkglist-aur.txt
 
+archlive:
+	rm -rf archlive
+	cp -r /usr/share/archiso/configs/releng/ archlive
+	cat archlinux/pkglist.txt | grep -v -E "xf[wc]|gnome|jdk|xorg|stack|baobab|thunderbird|ghc|networkmanager|virt-manager|libvirtd" >> archlive/packages.x86_64
+	echo "cd /root/dotfiles" >> archlive/airootfs/root/customize_airootfs.sh
+	echo "mv .zshrc .zshrc-old" >> archlive/airootfs/root/customize_airootfs.sh
+	echo "make vim zsh tmux" >> archlive/airootfs/root/customize_airootfs.sh
+	mkdir -p archlive/airootfs/etc/skel/
+	git clone .git archlive/airootfs/etc/skel/dotfiles
+	cd archlive && ./build.sh -v
+
 arch-restore:
 	sudo pacman -S --needed - < archlinux/pkglist.txt
 	@echo "Remember to install yay"
 	yay -S --needed - < archlinux/pkglist-aur.txt
 
-.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty gitconfig all
+.PHONY: vim tmux zsh xorg help atom atom-packages-restore atom-packages-backup arch-backup arch-restore alacritty gitconfig dockerconfig archlive term all
