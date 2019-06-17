@@ -8,3 +8,10 @@
 	enabled = true
 [diff "gpg"]
 	textconv = gpg --no-tty --decrypt
+[github]
+	user = odinuge
+[sendemail]
+  smtpuser = odin@ugedal.com
+  smtpserver = smtp.gmail.com
+  smtpencryption = tls
+  smtpserverport = 587
