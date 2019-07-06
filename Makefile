@@ -46,6 +46,7 @@ zsh:
 	curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
 	mkdir -p ~/.oh-my-zsh/custom/plugins/
 	bin/git-clone-or-sync https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	bin/git-clone-or-sync https://github.com/paulirish/git-open.git ~/.oh-my-zsh/custom/plugins/git-open
 
 term:
 	stow term
