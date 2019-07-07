@@ -14,11 +14,10 @@ call plug#begin('~/.vim/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
-Plug 'racer-rust/vim-racer'
 Plug 'previm/previm'
 Plug 'kaicataldo/material.vim'
 
-Plug 'rbong/vim-flog'
+Plug 'itchyny/lightline.vim'
 " Better undo support
 Plug 'mbbill/undotree'
 
@@ -32,17 +31,20 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'pangloss/vim-javascript'
 Plug 'vim-latex/vim-latex'
+Plug 'mxw/vim-jsx'
 
 " Fuzzy searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" Speeddating for <C-a> & <C-x>
 Plug 'tpope/vim-speeddating'
 
 " Tmux
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'jebaum/vim-tmuxify'
 
 " Remember last place
 Plug 'dietsche/vim-lastplace'
@@ -53,6 +55,7 @@ Plug 'airblade/vim-gitgutter'
 
 " UI
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-startify'
 
 " Colorschemes
@@ -63,33 +66,24 @@ Plug 'joshdick/onedark.vim'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 " Other tools
-Plug 'ervandew/supertab'
+"Plug 'ervandew/supertab'
 Plug 'svermeulen/vim-easyclip'
+Plug 'tpope/vim-repeat'
 Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'jparise/vim-graphql'
 Plug 'rust-lang/rust.vim'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
-
-" Autocomplete
-"Plug 'maralla/completor.vim'
-"Plug 'flowtype/vim-flow'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'wokalski/autocomplete-flow'
 Plug 'matze/vim-move'
-Plug 'digitaltoad/vim-pug'
+Plug 'jistr/vim-nerdtree-tabs'
 
-" ALE - Linting
+" Autocomplete & lining
 Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'meain/vim-package-info', { 'do': 'npm install' }
 
-Plug 'jebaum/vim-tmuxify'
+" Set proper root dir
 Plug 'airblade/vim-rooter'
-Plug 'mxw/vim-jsx'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-repeat'
-
-
-Plug 'Valloric/YouCompleteMe'
 
 
 call plug#end()
@@ -320,6 +314,12 @@ let g:ale_linters = {
             \ 'graphql': ['prettier'],
             \}
 " \ 'rust': ['rustfmt', 'rustc'],
+" " Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
 nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
 
 
@@ -342,3 +342,43 @@ let g:previm_open_cmd = 'chromium'
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files, see #649
+
+" Better display for messages
+set cmdheight=2
+
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+nnoremap <tab>   :tabnext<CR>
+nnoremap <S-tab>   :tabprev<CR>
