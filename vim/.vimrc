@@ -188,7 +188,7 @@ nnoremap <leader>p            :FZF<CR>
 nnoremap <leader>f            :FZF<CR>
 nnoremap <leader>u            :UndotreeToggle<CR>
 nnoremap <leader>m            :LivedownPreview<CR>
-nnoremap <leader>e            :NERDTreeToggle<CR>
+nnoremap <leader>e            :NERDTreeTabsToggle<CR>
 nnoremap <Leader>a            :Rg<CR>
 nnoremap <Leader>c            :call Toggle_background()<CR>
 nnoremap <Leader>t            :TagbarToggle<CR>
