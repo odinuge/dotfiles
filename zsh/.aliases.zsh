@@ -1,5 +1,7 @@
-alias tmux='env TERM=screen-256color tmux'
+# Short aliasies
+alias p=pacman
 
+# k8s
 alias kuebctl=kubectl
 alias kns=kubens
 alias kc=kubectx
