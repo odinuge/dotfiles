@@ -76,6 +76,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'matze/vim-move'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
 
 " Autocomplete & lining
 Plug 'w0rp/ale'
@@ -291,6 +293,7 @@ let g:ale_cpp_clang_options = '-std=c++14'
 let g:ale_asm_gcc_executable = 'arm-none-eabi-gcc'
 let g:ale_fixers = {
             \   'javascript': ['prettier'],
+            \   'typescript': ['prettier'],
             \   'graphql': ['prettier'],
             \   'css': ['prettier'],
             \   'c': ['clang-format'],
