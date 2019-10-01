@@ -2,9 +2,13 @@ acme.sh
 acpi
 alacritty
 alsa-utils
+android-tools
+ansible
 archiso
 arp-scan
 baobab
+bash-bats
+bazel
 bind-tools
 bison
 bluez-utils
@@ -23,7 +27,6 @@ docker-compose
 efibootmgr
 eog
 epiphany
-ethtool
 fakeroot
 file-roller
 flake8
@@ -58,7 +61,6 @@ gnome-tweaks
 gnome-user-docs
 go-bindata
 gopass
-gtk-xfce-engine
 htop
 hub
 intel-gpu-tools
@@ -68,14 +70,13 @@ iperf
 iputils
 jfsutils
 jq
-jre8-openjdk-headless
+julia
 keybase-gui
 kubectx
 lastpass-cli
 lftp
 libva-utils
 licenses
-linux
 logrotate
 man-db
 man-pages
@@ -105,6 +106,7 @@ pkgfile
 pm2
 powertop
 python-black
+python-sphinx
 python-tox
 python2-protobuf
 qtpass
@@ -112,6 +114,7 @@ rawtherapee
 reiserfsprogs
 rpmextract
 ruby-bundler
+sbt
 screen
 screenfetch
 shellcheck
@@ -122,11 +125,14 @@ sshuttle
 stow
 sushi
 the_silver_searcher
+tidy
+tlp
 tmux
 totem
 traceroute
+transmission-gtk
+ttf-joypixels
 turbostat
-usbutils
 valgrind
 vault
 vi
@@ -135,7 +141,7 @@ vino
 virt-manager
 vlc
 whois
-wireguard-tools
+wireless_tools
 wireshark-qt
 xdg-user-dirs-gtk
 xfce4-appfinder

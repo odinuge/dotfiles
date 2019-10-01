@@ -4,6 +4,7 @@
 	signingkey = 43FCA9395DB2DA04D1D29ADF49AEAB06408DD4C2
 [commit]
 	gpgsign = true
+	verbose = true
 [rerere]
 	enabled = true
 [diff "gpg"]
