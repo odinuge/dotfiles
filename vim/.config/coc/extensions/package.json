@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "coc-docker": ">=0.2.1",
+    "coc-emoji": ">=1.2.3",
+    "coc-git": ">=1.7.0",
+    "coc-json": ">=1.2.4",
+    "coc-prettier": ">=1.1.11",
+    "coc-python": ">=1.2.7",
+    "coc-rls": ">=1.1.4",
+    "coc-snippets": ">=2.1.18",
+    "coc-tsserver": ">=1.4.9"
+  }
+}

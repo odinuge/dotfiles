@@ -1,0 +1,45 @@
+{
+    "tsserver.enableJavascript": false,
+    "coc.source.emoji.filetypes":[
+        "markdown",
+        "gitcommit"
+    ],
+    "extensions": {
+        "coc-docker": ">=0.2.1",
+        "coc-emoji": ">=1.2.3",
+        "coc-git": ">=1.6.16",
+        "coc-json": ">=1.2.4",
+        "coc-python": ">=1.2.6",
+        "coc-rls": ">=1.1.4",
+        "coc-snippets": ">=2.1.17",
+        "coc-tsserver": ">=1.4.9"
+    },
+    "languageserver": {
+        "metals": {
+          "command": "metals-vim",
+          "rootPatterns": ["build.sbt"],
+          "filetypes": ["scala", "sbt"]
+        },
+        "c": {
+          "command": "clangd",
+          "args": [],
+          "rootPatterns": [".vim/", ".git/", ".hg/"],
+          "filetypes": ["c"]
+        },
+        "golang": {
+          "command": "gopls",
+          "args": [],
+          "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+          "filetypes": ["go"]
+        },
+        "flow": {
+            "command": "flow",
+            "args": ["lsp"],
+            "filetypes": ["javascript", "javascriptreact","javascript.jsx"],
+            "initializationOptions": {},
+            "requireRootPattern": true,
+            "settings": {},
+            "rootPatterns": [".flowconfig"]
+        }
+    }
+}
