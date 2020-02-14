@@ -1,18 +1,15 @@
-export ZSH=/$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 export DOTFILES=$(dirname $(dirname $(readlink -nf ~/.zshrc)))
 
 ZSH_THEME="refined"
 
 plugins=(
-    zsh-syntax-highlighting
     git
-    django
     archlinux
     golang
     go
     docker
-    kubectl
     pass
 )
 
@@ -24,7 +21,7 @@ FILES=(
     "$HOME/.functions.zsh"
     # Vim-mode <3
     "$HOME/.vim-mode.zsh"
-    "$HOME/.zshrc.priv"
+    "$HOME/.zshrc_priv"
     # Utils
     "$HOME/.fzf.zsh"
     "$HOME/.cargo/env"
@@ -107,6 +104,6 @@ bindkey '^[[Z' reverse-menu-complete
 unsetopt extendedglob
 
 # Enter tmux
-if [ -z $TMUX ] && [[ "$(tty)" =~ /dev/pts/* ]]; then exec tmux; fi
+if [ -z $TMUX ] && [[ "$(tty)" =~ /dev/pts/* ]] && [ -z $IS_DOCKER ] ; then exec tmux; fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ $IS_DOCKER ]; then export PROMPT="(toolbox) %(?.%F{magenta}.%F{red})❯%f "; fi

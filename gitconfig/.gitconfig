@@ -8,7 +8,7 @@
 [rerere]
 	enabled = true
 [diff "gpg"]
-	textconv = gpg --no-tty --decrypt
+	textconv = gpg --no-tty --decrypt 2>/dev/null
 [github]
 	user = odinuge
 [sendemail]
@@ -16,3 +16,8 @@
   smtpserver = smtp.gmail.com
   smtpencryption = tls
   smtpserverport = 587
+
+[url "git@github.com:odinuge"]
+    insteadOf = https://github.com/odinuge
+[http]
+	cookiefile = /home/odin/.gitcookies

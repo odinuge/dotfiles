@@ -30,8 +30,9 @@ vim:
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 	@./script/info.sh "Downloading vim plugins"
+	#vim +PlugInstall "+call coc#util#install()" +qa
 	vim +PlugInstall +qa
-	vim +PlugUpdate +qa
+	#vim +PlugUpdate +qa
 
 tmux:
 	stow tmux
@@ -44,9 +45,14 @@ tmux:
 zsh:
 	stow zsh
 	curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
+	mv ~/.zshrc ~/.zshrc-old
+	stow zsh
 	mkdir -p ~/.oh-my-zsh/custom/plugins/
 	bin/git-clone-or-sync https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	bin/git-clone-or-sync https://github.com/paulirish/git-open.git ~/.oh-my-zsh/custom/plugins/git-open
+
+zsh_priv:
+	gpg -d ./zsh/.zshrc_priv.gpg > ~/.zshrc_priv
 
 term:
 	stow term
