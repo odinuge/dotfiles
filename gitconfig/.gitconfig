@@ -1,5 +1,5 @@
 [user]
-	email = odin@ugedal.com
+	email = odin@uged.al
 	name = Odin Ugedal
 	signingkey = 43FCA9395DB2DA04D1D29ADF49AEAB06408DD4C2
 [commit]
@@ -21,3 +21,5 @@
     insteadOf = https://github.com/odinuge
 [http]
 	cookiefile = /home/odin/.gitcookies
+[pull]
+	ff = only

@@ -14,8 +14,6 @@ call plug#begin('~/.vim/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
-Plug 'previm/previm'
-Plug 'kaicataldo/material.vim'
 
 Plug 'itchyny/lightline.vim'
 " Better undo support
@@ -25,12 +23,10 @@ Plug 'mbbill/undotree'
 Plug 'jamessan/vim-gnupg'
 
 " Language spesific stuff
-"Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
 Plug 'tpope/vim-markdown'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'hail2u/vim-css3-syntax'
 Plug 'pangloss/vim-javascript'
-Plug 'vim-latex/vim-latex'
 Plug 'mxw/vim-jsx'
 
 " Fuzzy searching
@@ -58,39 +54,32 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-surround'
 
 " Colorschemes
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
-Plug 'jacoborus/tender.vim'
 Plug 'joshdick/onedark.vim'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 " Other tools
-"Plug 'ervandew/supertab'
 Plug 'svermeulen/vim-easyclip'
 Plug 'tpope/vim-repeat'
 Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'jparise/vim-graphql'
 Plug 'rust-lang/rust.vim'
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'matze/vim-move'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
+Plug 'dense-analysis/ale'
 
-" Autocomplete & lining
-Plug 'w0rp/ale'
 if empty($NO_COC)
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 endif
-Plug 'meain/vim-package-info', { 'do': 'npm install' }
-Plug 'liuchengxu/vim-clap'
 
 " Set proper root dir
 Plug 'airblade/vim-rooter'
-Plug 'derekwyatt/vim-scala'
 
 
 call plug#end()
@@ -173,9 +162,6 @@ silent! colorscheme one
   endif
 "endif
 hi Normal guibg=NONE ctermbg=NONE
-"call one#highlight('Normal', '', '', 'none')
-
-
 
 
 " HIghlight Bad spaces
@@ -202,7 +188,6 @@ nnoremap <Leader>t            :TagbarToggle<CR>
 nnoremap <Leader>b            :Buffers<CR>
 nnoremap <Leader>g            :GitFiles<CR>
 map      <Leader>             <Plug>(easymotion-prefix)
-
 
 nnoremap Q @q
 
@@ -255,7 +240,6 @@ hi ALEwarningSign ctermfg=3
 
 
 let g:startify_bookmarks = [
-    \ {'n': '~/src/ntnu-hugo/'},
     \ {'v': '~/.vimrc'},
     \ {'z': '~/.zshrc'},
     \ {'x': '~/.Xresources'},
@@ -271,6 +255,7 @@ let g:gitgutter_sign_modified = '|'
 let g:gitgutter_sign_removed = '|'
 let g:gitgutter_sign_removed_first_line = '__'
 let g:gitgutter_sign_modified_removed = '__'
+highlight! link SignColumn LineNr
 
 " Cursor shape in Nvim
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
@@ -372,6 +357,10 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+let g:lightline = {
+            \ 'colorscheme': 'materia',
+            \ }
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 if empty($NO_COC)
@@ -396,32 +385,6 @@ if empty($NO_COC)
 
     "nnoremap <tab>   :tabnext<CR>
     nnoremap <S-tab>   :tabprev<CR>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     " if hidden is not set, TextEdit might fail.
     set hidden
@@ -544,20 +507,17 @@ if empty($NO_COC)
     nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
     " Resume latest coc list
     nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-    let g:go_def_mode = ''
+    let g:go_def_mode = 'gopls'
 
-    let g:lightline = {
-          \ 'colorscheme': 'one',
-          \ }
     let g:coc_global_extensions = [
                 \'coc-prettier',
                 \'coc-docker',
                 \'coc-emoji',
                 \'coc-git',
                 \'coc-json',
-                \'coc-python',
                 \'coc-rls',
                 \'coc-snippets',
                 \'coc-tsserver',
                 \]
 endif
+

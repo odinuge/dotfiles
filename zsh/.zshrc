@@ -107,3 +107,5 @@ unsetopt extendedglob
 if [ -z $TMUX ] && [[ "$(tty)" =~ /dev/pts/* ]] && [ -z $IS_DOCKER ] ; then exec tmux; fi
 
 if [ $IS_DOCKER ]; then export PROMPT="(toolbox) %(?.%F{magenta}.%F{red})❯%f "; fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

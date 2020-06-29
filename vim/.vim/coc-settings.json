@@ -24,7 +24,7 @@
           "command": "clangd",
           "args": [],
           "rootPatterns": [".vim/", ".git/", ".hg/"],
-          "filetypes": ["c"]
+          "filetypes": ["c","cc","cpp","h"]
         },
         "golang": {
           "command": "gopls",
