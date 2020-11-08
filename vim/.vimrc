@@ -21,9 +21,10 @@ Plug 'mbbill/undotree'
 
 " GPG enc support
 Plug 'jamessan/vim-gnupg'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 " Language spesific stuff
-Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go'
 Plug 'tpope/vim-markdown'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'pangloss/vim-javascript'
@@ -74,15 +75,28 @@ Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 Plug 'dense-analysis/ale'
 
-if empty($NO_COC)
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-endif
+Plug 'neovim/nvim-lspconfig'
+Plug 'BrandonRoehl/auto-omni'
 
 " Set proper root dir
 Plug 'airblade/vim-rooter'
 
 
 call plug#end()
+
+function! InsertTabWrapper()
+  if pumvisible()
+    return "\<c-n>"
+  endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-x>\<c-o>"
+  endif
+endfunction
+inoremap <expr><tab> InsertTabWrapper()
+inoremap <expr><s-tab> pumvisible()?"\<c-p>":"\<c-d>"
 
 "
 " UI 
@@ -300,17 +314,6 @@ let g:ale_fixers = {
             \   'sh': ['shfmt']
             \}
 
-" \ 'go': ['go build', 'go vet','go imports','gometalinter', 'gofmt'],
-let g:ale_linters = {
-            \ 'cpp': [ 'clang', 'clangtidy', 'cppcheck', 'cpplint', 'gcc' ],
-            \ 'javascript': ['prettier','eslint', 'flow'],
-            \ 'css': ['stylelint', 'prettier'],
-            \ 'go': ['gofmt'],
-            \ 'python': ['flake8'],
-            \ 'yaml': ['prettier'],
-            \ 'graphql': ['prettier'],
-            \}
-" \ 'rust': ['rustfmt', 'rustc'],
 " " Write this in your vimrc file
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
@@ -320,16 +323,9 @@ let g:ale_lint_on_enter = 0
 nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
 
 
-let g:completor_clang_binary = '/usr/bin/clang'
-let g:completor_racer_binary = '/home/odin/.cargo/bin/racer'
-let g:deoplete#enable_at_startup = 1
 set pyxversion=3
 let $NVIM_PYTHON_LOG_FILE="/tmp/nvim_log"
 let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
 augroup PrevimSettings
     autocmd!
     autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
@@ -361,163 +357,71 @@ let g:lightline = {
             \ 'colorscheme': 'materia',
             \ }
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-if empty($NO_COC)
-    inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+"nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 
-    " Use <c-space> to trigger completion.
-    inoremap <silent><expr> <c-space> coc#refresh()
-
-    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-    " Coc only does snippet and additional edit on confirm.
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+set omnifunc=v:lua.vim.lsp.omnifunc
+set completeopt-=preview
 
 
-    "nnoremap <tab>   :tabnext<CR>
-    nnoremap <S-tab>   :tabprev<CR>
+lua <<EOF
 
-    " if hidden is not set, TextEdit might fail.
-    set hidden
+-- vim
+-- yarn global add vim-language-server
+require'nvim_lsp'.gopls.setup{}
 
-    " Some servers have issues with backup files, see #649
-    set nobackup
-    set nowritebackup
+require'nvim_lsp'.vimls.setup{}
 
-    " Better display for messages
-    set cmdheight=2
+-- flow
+-- npx flow lsp --help
+require'nvim_lsp'.flow.setup{
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx" }
+}
 
-    " You will have bad experience for diagnostic messages when it's default 4000.
-    set updatetime=300
+-- typescript
+-- :LspInstall tsserver
+require'nvim_lsp'.tsserver.setup{
+  filetypes = {"typescript", "typescriptreact", "typescript.tsx"}
+}
 
-    " don't give |ins-completion-menu| messages.
-    set shortmess+=c
+-- bash
+-- :LspInstall bashls
+require'nvim_lsp'.bashls.setup{}
 
-    " always show signcolumns
-    set signcolumn=yes
+-- css
+-- :LspInstall cssls
+require'nvim_lsp'.cssls.setup{}
 
-    " Use tab for trigger completion with characters ahead and navigate.
-    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-    inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+-- Docker
+-- :LspInstall dockerls
+require'nvim_lsp'.dockerls.setup{}
 
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
+-- HTML
+-- LspInstall html
+require'nvim_lsp'.html.setup{}
 
-    " Use <c-space> to trigger completion.
-    inoremap <silent><expr> <c-space> coc#refresh()
+-- Java
+-- :LspInstall jdtls
+require'nvim_lsp'.jdtls.setup{}
 
-    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-    " Coc only does snippet and additional edit on confirm.
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+-- python
+-- pip3 install -U jedi-language-server
+require'nvim_lsp'.jedi_language_server.setup{}
 
-    " Use `[c` and `]c` to navigate diagnostics
-    nmap <silent> [c <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]c <Plug>(coc-diagnostic-next)
+-- json
+-- :LspInstall jsonls
+require'nvim_lsp'.jsonls.setup{}
 
-    " Remap keys for gotos
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gy <Plug>(coc-type-definition)
-    nmap <silent> gi <Plug>(coc-implementation)
-    nmap <silent> gr <Plug>(coc-references)
+-- yamlls
+-- :LspInstall yamlls
+require'nvim_lsp'.yamlls.setup{}
 
-    " Use K to show documentation in preview window
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    function! s:show_documentation()
-      if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-      else
-        call CocAction('doHover')
-      endif
-    endfunction
-
-    " Highlight symbol under cursor on CursorHold
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-
-    " Remap for rename current word
-    nmap <leader>rn <Plug>(coc-rename)
-
-    " Remap for format selected region
-    xmap <leader>f  <Plug>(coc-format-selected)
-    nmap <leader>f  <Plug>(coc-format-selected)
-
-    augroup mygroup
-      autocmd!
-      " Setup formatexpr specified filetype(s).
-      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-      " Update signature help on jump placeholder
-      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    augroup end
-
-    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-    "xmap <leader>a  <Plug>(coc-codeaction-selected)
-    "nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-    " Remap for do codeAction of current line
-    nmap <leader>ac  <Plug>(coc-codeaction)
-    " Fix autofix problem of current line
-    nmap <leader>qf  <Plug>(coc-fix-current)
-
-    " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-    "nmap <silent> <TAB> <Plug>(coc-range-select)
-    "xmap <silent> <TAB> <Plug>(coc-range-select)
-    "xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
-
-    " Use `:Format` to format current buffer
-    command! -nargs=0 Format :call CocAction('format')
-
-    " Use `:Fold` to fold current buffer
-    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-    " use `:OR` for organize import of current buffer
-    command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-    " Add status line support, for integration with other plugin, checkout `:h coc-status`
-    set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-    " Using CocList
-    " Show all diagnostics
-    nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-    " Manage extensions
-    nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-    " Show commands
-    nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-    " Find symbol of current document
-    nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-    " Search workspace symbols
-    nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-    " Do default action for next item.
-    nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-    " Do default action for previous item.
-    nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-    " Resume latest coc list
-    nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-    let g:go_def_mode = 'gopls'
-
-    let g:coc_global_extensions = [
-                \'coc-prettier',
-                \'coc-docker',
-                \'coc-emoji',
-                \'coc-git',
-                \'coc-json',
-                \'coc-rls',
-                \'coc-snippets',
-                \'coc-tsserver',
-                \]
-endif
-
+EOF

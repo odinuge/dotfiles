@@ -7,6 +7,10 @@
 	verbose = true
 [rerere]
 	enabled = true
+#[core]
+#    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+#[interactive]
+#    diffFilter = delta --color-only
 [diff "gpg"]
 	textconv = gpg --no-tty --decrypt 2>/dev/null
 [github]
@@ -23,3 +27,7 @@
 	cookiefile = /home/odin/.gitcookies
 [pull]
 	ff = only
+[format]
+	signoff = true
+[diff "ansible-vault"]
+	textconv = ansible-vault view

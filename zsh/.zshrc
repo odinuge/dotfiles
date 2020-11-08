@@ -55,7 +55,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
+export EDITOR='nvim'
 export NODE_ENV=development
 
 
@@ -109,3 +109,4 @@ if [ -z $TMUX ] && [[ "$(tty)" =~ /dev/pts/* ]] && [ -z $IS_DOCKER ] ; then exec
 if [ $IS_DOCKER ]; then export PROMPT="(toolbox) %(?.%F{magenta}.%F{red})❯%f "; fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+alias vim=nvim

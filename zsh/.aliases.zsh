@@ -18,3 +18,7 @@ alias kd="kubectl describe"
 alias tmux='env TERM=screen-256color tmux'
 alias norsk="loadkeys no-latin1"
 
+alias grun="git commit --amend --no-edit && git push --force-with-lease"
+
+
+
